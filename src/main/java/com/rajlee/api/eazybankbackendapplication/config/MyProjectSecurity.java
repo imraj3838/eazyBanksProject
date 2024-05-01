@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -30,41 +31,8 @@ public class MyProjectSecurity {
                 return http.build();
     }
 
-    // Approach 1 :This method is implemented for multiple users is there , this is not for production environment
-//    @Bean
-//    InMemoryUserDetailsManager userDetailsService(){
-//        UserDetails admin = User.withDefaultPasswordEncoder()
-//                .username("priyanshu")
-//                .password("prishu")
-//                .authorities("admin")
-//                .build();
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("sonali")
-//                .password("12345")
-//                .authorities("read")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin,user);
-//    }
-
-    //Approach2 : similarly for above bean there is another method to write
-//    @Bean
-//    InMemoryUserDetailsManager userDetailsService(){
-//        UserDetails admin = User.withUsername("priyanshu").password("prishu").authorities("admin").build();
-//        UserDetails user = User.withUsername("sonali").password("12345").authorities("read").build();
-//        return new InMemoryUserDetailsManager(admin,user);
-//    }
-
-//    type 3 using database user details
-//    @Bean
-//    public UserDetailsService userDetailsService(DataSource dataSource){
-//        return new JdbcUserDetailsManager(dataSource);
-//    }
-    //because we have written our own services and business logic
-
-
-
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
